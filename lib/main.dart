@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     home: Scaffold(
       appBar: AppBar(
-        title: Text('Google Sheets Data Entry App'),
+        title: const Text('Google Sheets Data Entry App'),
       ),
       body: MyUI(googleSheetsApi: googleSheetsApi),
     ),

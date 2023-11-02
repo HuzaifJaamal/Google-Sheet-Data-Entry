@@ -2,7 +2,6 @@
 import 'package:data_entry_app/sheet_home.dart';
 import 'package:flutter/material.dart';
 
-
 class MyUI extends StatelessWidget {
   final GoogleSheetsApi googleSheetsApi;
   final TextEditingController createcontroller = TextEditingController();
@@ -19,9 +18,11 @@ class MyUI extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
+                scrollPadding: const EdgeInsets.only(left: 40, right: 30),
                 controller: createcontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Worksheet Name',
+                  // contentPadding: EdgeInsets.only(left: 40),
                 ),
               ),
               ElevatedButton(
@@ -29,18 +30,19 @@ class MyUI extends StatelessWidget {
                   String worksheetName = createcontroller.text;
                   if (worksheetName.isNotEmpty) {
                     await googleSheetsApi.createWorksheet(worksheetName);
-                    ScaffoldMessenger.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Worksheet created: $worksheetName'),
                       ),
                     );
                   }
+                  createcontroller.clear();
                 },
-                child: Text('Create Worksheet'),
+                child: const Text('Create Worksheet'),
               ),
               TextField(
                 controller: updatecontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Worksheet Name',
                 ),
               ),
@@ -49,25 +51,20 @@ class MyUI extends StatelessWidget {
                   String worksheetCellUpdate = updatecontroller.text;
                   if (worksheetCellUpdate.isNotEmpty) {
                     await googleSheetsApi.updateCell('$worksheetCellUpdate', 2, 2);
-                    ScaffoldMessenger.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Cell updated in Google Sheets!'),
                       ),
                     );
                   }
-                  // await googleSheetsApi.updateCell('KOKO2', 1, 1);
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(
-                  //     content: Text('Cell updated in Google Sheets!'),
-                  //   ),
-                  // );
+                 updatecontroller.clear();
                 },
-                child: Text('Update Google Sheets'),
+                child: const Text('Update Google Sheets'),
               ),
               
               TextField(
                 controller: selectcontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Worksheet Name',
                 ),
               ),
@@ -76,26 +73,21 @@ class MyUI extends StatelessWidget {
                   String worksheetSelect = selectcontroller.text;
                   if (worksheetSelect.isNotEmpty) {
                     await googleSheetsApi.init(worksheetSelect);
-                    // await googleSheetsApi.updateCell('$worksheetSelect', 1, 1);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Worksheet selected: $worksheetSelect'),
                       ),
                     );
                   }
-                  // await googleSheetsApi.updateCell('KOKO2', 1, 1);
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(
-                  //     content: Text('Cell updated in Google Sheets!'),
-                  //   ),
-                  // );
+                  selectcontroller.clear();
+                  
                 },
-                child: Text('Google Sheet Selected'),
+                child: const Text('Google Sheet Selected'),
               ),
 
               TextField(
                 controller: deletecontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Worksheet Name to be Deleted',
                 ),
               ),
@@ -111,8 +103,9 @@ class MyUI extends StatelessWidget {
                       ),
                     );
                   }
+                  deletecontroller.clear();
                 },
-                child: Text('Delete Sheet'),
+                child: const Text('Delete Sheet'),
               ),
             ],
           ),
