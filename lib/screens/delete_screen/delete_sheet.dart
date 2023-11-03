@@ -2,13 +2,22 @@ import 'package:data_entry_app/sheet_home.dart';
 import 'package:data_entry_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
-class DeleteSheet extends StatelessWidget {
+class DeleteSheet extends StatefulWidget {
   final GoogleSheetsApi googleSheetsApi;
-  final TextEditingController deletecontroller = TextEditingController();
+
+  DeleteSheet({required this.googleSheetsApi, Key? key}) :super(key: key);
+
+  @override
+  State<DeleteSheet> createState() => _DeleteSheetState();
+}
+
+class _DeleteSheetState extends State<DeleteSheet> {
+  // final TextEditingController deletecontroller = TextEditingController();
+  final TextEditingController selectcontroller = TextEditingController();
+  // String selectedSheet = '';
   
 
 
-  DeleteSheet({super.key, required this.googleSheetsApi});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +30,13 @@ class DeleteSheet extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+             
+
+
+
+
             TextField(
-                controller: deletecontroller,
+                controller: selectcontroller,
                 decoration: const InputDecoration(
                   labelText: 'Enter Worksheet Name to be Deleted',
                 ),
@@ -30,16 +44,19 @@ class DeleteSheet extends StatelessWidget {
                 CustomBotton(
                   buttonText: "Delete Sheet",
                   onPressed: () async {
-                    String sheetTitle = deletecontroller.text;
+                    String worksheetSelect = selectcontroller.text;
+                    // String sheetTitle = deletecontroller.text;
+                     String sheetTitle = worksheetSelect; 
                   if (sheetTitle.isNotEmpty) {
-                    await googleSheetsApi.deleteSheet(sheetTitle);
+                    await widget.googleSheetsApi.init(worksheetSelect);
+                    await widget.googleSheetsApi.deleteSheet(sheetTitle);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Sheet deleted: $sheetTitle'),
                       ),
                     );
                   }
-                  deletecontroller.clear();
+                  selectcontroller.clear();
                   },
                   ),
           ],

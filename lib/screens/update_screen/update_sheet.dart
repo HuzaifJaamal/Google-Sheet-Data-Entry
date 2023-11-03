@@ -1,10 +1,10 @@
 import 'package:data_entry_app/sheet_home.dart';
-import 'package:data_entry_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class UpdateSheet extends StatelessWidget {
   final GoogleSheetsApi googleSheetsApi;
   final TextEditingController updatecontroller = TextEditingController();
+  final TextEditingController selectcontroller = TextEditingController();
 
   UpdateSheet({super.key, required this.googleSheetsApi});
 
@@ -20,15 +20,23 @@ class UpdateSheet extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-                controller: updatecontroller,
+                controller: selectcontroller,
                 decoration: const InputDecoration(
-                  labelText: 'Enter Worksheet Name',
+                  labelText: 'Enter Worksheet Name to be Select',
                 ),
               ),
-              CustomBotton(
-                buttonText: 'Update Google Sheets',
-                onPressed: () async{
-                  String worksheetCellUpdate = updatecontroller.text;
+              TextField(
+                controller: updatecontroller,
+                decoration: const InputDecoration(
+                  labelText: 'Enter Worksheet Name to be Update',
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  String worksheetSelect = selectcontroller.text;
+                  if (worksheetSelect.isNotEmpty) {
+                    await googleSheetsApi.init(worksheetSelect);
+                   String worksheetCellUpdate = updatecontroller.text;
                   if (worksheetCellUpdate.isNotEmpty) {
                     await googleSheetsApi.updateCell(worksheetCellUpdate, 2, 2);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -37,9 +45,13 @@ class UpdateSheet extends StatelessWidget {
                       ),
                     );
                   }
+                  }
                  updatecontroller.clear();
+                 selectcontroller.clear();
                 },
-              ),            
+                child: const Text('Update Google Sheets'),
+              ),
+            
           ],
         ),
       )
