@@ -25,6 +25,8 @@ class GoogleSheetsApi {
 
   GoogleSheetsApi() : gsheets = GSheets(_credentials);
 
+  
+
   Future<void> init(String worksheetSelect) async {
     final ss = await gsheets.spreadsheet(_spreadsheetId);
     sheet = ss.worksheetByTitle('$worksheetSelect');
@@ -46,8 +48,48 @@ class GoogleSheetsApi {
    Future<void> deleteSheet(String sheetTitle) async {
     final ss = await gsheets.spreadsheet(_spreadsheetId);
     final worksheet = ss.worksheetByTitle(sheetTitle);
+    
     if (worksheet != null) {
       await ss.deleteWorksheet(worksheet);
     }
   }
+
+  Future<void> updateSheetName(String sheetTitle, int row, int column, String value) async {
+    final ss = await gsheets.spreadsheet(_spreadsheetId);
+    final sheet = ss.worksheetByTitle(sheetTitle);
+
+    if (sheet != null) {
+      await sheet.clear();
+      await sheet.values.insertValue(value, column: column, row: row);
+    }
+  }
+
+
+  //   Future<void> getSpreadsheetName(sheetTitle) async {
+  //   final ss = await gsheets.spreadsheet(_spreadsheetId);
+    
+  //   print(
+
+  //   ss.data.namedRanges.byName.values.map((e) => {
+  //     'name': e.name,
+  //           'start':
+  //               '${String.fromCharCode((e.range?.startColumnIndex ?? 0) + 97)}${(e.range?.startRowIndex ?? 0) + 1}',
+  //           'end':
+  //               '${String.fromCharCode((e.range?.endColumnIndex ?? 0) + 97)}${(e.range?.endRowIndex ?? 0) + 1}'
+  //   }).join('\n')
+  //   );
+    
+  // }
+
+//  Future<String> getSpreadsheetTitle() async {
+//     final ss = await gsheets.spreadsheet(_spreadsheetId);
+//     final sheet = ss.worksheetByTitle('TitleSheet'); // Replace 'TitleSheet' with the actual sheet name where you stored the title.
+    
+//     if (sheet != null) {
+//       final cell = await sheet.values.value(column: 1, row: 1);
+//       return cell.toString();
+//     } else {
+//       return 'No Title Found';
+//     }
+//   }
 }
