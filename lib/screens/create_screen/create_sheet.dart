@@ -40,7 +40,8 @@ class CreateScreen extends StatelessWidget {
                   }
                   createcontroller.clear();
                 },
-                buttonText: "Create Worksheet",
+                child: Text("Create Worksheet"),
+                // buttonText: "Create Worksheet",
               ),
           ],
         ),

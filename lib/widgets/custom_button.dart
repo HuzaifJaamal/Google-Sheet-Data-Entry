@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 
 class CustomBotton extends StatelessWidget {
   // There is we make Variable.
-  final String buttonText;
+  // final String buttonText;
   // There is we make Control Function.
   // The "onPressed" is the name of the function calling.
   final void Function() ? onPressed;
   // There is we make to control the width or height of the Button.
   final double? width;
+
+  final Widget ? child;
   // Now Pass this Variable into the Consturctor.
-  const CustomBotton({super.key, required this.buttonText, this.onPressed, this.width});
+  const CustomBotton({
+    super.key, 
+    // required this.buttonText, 
+    required this.onPressed, 
+    this.width,
+    required this.child,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +28,7 @@ class CustomBotton extends StatelessWidget {
         // This is give us to use it in the different file for different processes. 
         onPressed: onPressed,
         // After that Pass it into the text place.
-        child: Text(buttonText), 
+        child: child, 
         ),
     );
   }

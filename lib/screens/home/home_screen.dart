@@ -27,17 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.pushNamed(context, "/createscreen",);
               },
-              buttonText: "Go to Create Worksheet"
+              child: Text("Go to Create Worksheet"),
               ),
 
               CustomBotton(
               onPressed: () {
                 Navigator.pushNamed(context, "/deletescreen",);
               },
-              buttonText: "Go to Delete Worksheet"
+              child: const Text("Go to Delete Worksheet"),
               ),
               
-
+              
               CustomBotton(
               onPressed: () async{
                 setState(() {
@@ -48,73 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   isUpdating = false;
                  });
                 Navigator.pushNamed(context, "/updatescreen",);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Cell updated with "New Value"'),
+                    ),
+                  );
               },
-              buttonText: "Go to Update Worksheet"
+              child: isUpdating ? const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                  : const Text("Press"),
               ),
-
-
-
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     await googleSheetsApi.updateSheetName('Worksheet1', 1, 1, '=SheetNames()');
-              //     ScaffoldMessenger.of(context).showSnackBar(
-              //       SnackBar(
-              //         content: Text('Cell updated with "New Value"'),
-              //       ),
-              //     );
-              //   },
-              //   child: Text('Update Cell'),
-              // ),
-
-
-
-              
-
-
-
-
-
-
-              
-              // Text(
-              //   'Spreadsheet Name: ${googleSheetsApi.getSpreadsheetName(sheetTitle)}',
-              //   style: TextStyle(fontSize: 16),
-              // ),
-
-              
-
-              // FutureBuilder<String>(
-              //   future: googleSheetsApi.getSpreadsheetName(sheetTitle),
-              //   builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return CircularProgressIndicator(); // Display a loading indicator while fetching data.
-              //     } else if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     } else {
-              //       return Text(
-              //         'Spreadsheet Name: $sheetTitle',
-              //         style: TextStyle(fontSize: 16),
-              //       );
-              //     }
-              //   },
-              // ),
-
-
-              // FutureBuilder<String>(
-              //   future: googleSheetsApi.getSpreadsheetName(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return CircularProgressIndicator(); // Display a loading indicator while fetching data.
-              //     } else if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     } else {
-              //       return Text(
-              //         'Spreadsheet Name: ${snapshot.data}',
-              //         style: TextStyle(fontSize: 16),
-              //       );
-              //     }
-              //   },
-              // ),
 
               // TextField(
               //   controller: selectcontroller,
@@ -137,9 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
               //   },
               //   child: const Text('Google Sheet Selected'),
               // ),
-
-
-
             ],
           ),
         );

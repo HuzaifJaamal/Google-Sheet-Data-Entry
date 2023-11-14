@@ -42,7 +42,8 @@ class _DeleteSheetState extends State<DeleteSheet> {
                 ),
               ),
                 CustomBotton(
-                  buttonText: "Delete Sheet",
+                  child: Text("Delete Sheet"),
+                  // buttonText: "Delete Sheet",
                   onPressed: () async {
                     String worksheetSelect = selectcontroller.text;
                     // String sheetTitle = deletecontroller.text;
